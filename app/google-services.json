@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784325731195",
+    "project_id": "foodresq-8c334",
+    "storage_bucket": "foodresq-8c334.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784325731195:android:1c43d71bd30b8a979093de",
+        "android_client_info": {
+          "package_name": "com.example.foodresq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784325731195-vuhjq5cpo267lg1vv3jetagkmo3800bj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA1BFx3iAgyN5aPePA5GXVOMcjFokiOfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784325731195-vuhjq5cpo267lg1vv3jetagkmo3800bj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
