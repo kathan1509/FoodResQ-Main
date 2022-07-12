@@ -12,6 +12,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeRestaurant extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -71,6 +72,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
                 startActivity(intent4);
                 break;
             case R.id.nav_logout:
+                FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(HomeRestaurant.this, LogIn.class);
                 startActivity(i);
                 break;
