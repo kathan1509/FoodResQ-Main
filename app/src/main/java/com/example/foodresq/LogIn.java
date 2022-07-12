@@ -17,13 +17,20 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LogIn extends AppCompatActivity {
 
     public FirebaseAuth mAuth;
     // email validation
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userType;
+    String type = "Restaurant";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,26 +61,25 @@ public class LogIn extends AppCompatActivity {
 
     }
 
-    public void loginUserAccount(String userEmail, String pwd)
-    {
-        if(TextUtils.isEmpty(userEmail)){
+    public void loginUserAccount(String userEmail, String pwd) {
+        if (TextUtils.isEmpty(userEmail)) {
             Toast.makeText(getApplicationContext(), "Email can't be Empty!", Toast.LENGTH_LONG).show();
             return;
 
         }
 
-        if(TextUtils.isEmpty(pwd)){
+        if (TextUtils.isEmpty(pwd)) {
             Toast.makeText(getApplicationContext(), "Password can't be empty!", Toast.LENGTH_LONG).show();
             return;
         }
         //login
-        if (userEmail.matches(emailPattern)){
+        if (userEmail.matches(emailPattern)) {
             mAuth.signInWithEmailAndPassword(userEmail, pwd).addOnCompleteListener(
                     new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(
-                                @NonNull Task<AuthResult> task)
-                        {
+                                @NonNull Task<AuthResult> task) {
+
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(),
                                                 "Login successful!!",
@@ -81,14 +87,36 @@ public class LogIn extends AppCompatActivity {
                                         .show();
                                 // if login is successful
                                 // intent to home activity
-                                Intent intent
-                                        = new Intent(LogIn.this,
-                                        HomeRestaurant.class);
-                                startActivity(intent);
-                            }
+                                //checkUserType
+                                String currentUser = user.getEmail();
 
-                            else {
+                                db.collection("User")
+                                        .whereEqualTo("uEmailID", currentUser)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (DocumentSnapshot document : task.getResult()) {
+                                                        userType = document.get("uType").toString();
+                                                        Toast.makeText(LogIn.this, userType, Toast.LENGTH_LONG).show();
 
+                                                        if (userType.equals("Restaurant")) {
+                                                            Intent intent
+                                                                    = new Intent(LogIn.this,
+                                                                    HomeRestaurant.class);
+                                                            startActivity(intent);
+                                                        } else {
+                                                            Intent intent
+                                                                    = new Intent(LogIn.this,
+                                                                    ProfileActivity.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                            } else {
                                 // login failed
                                 Toast.makeText(getApplicationContext(),
                                                 "Invalid UserID or password!",
@@ -96,11 +124,10 @@ public class LogIn extends AppCompatActivity {
                                         .show();
                             }
                         }
-
                     }
             );
         } else {
-            Toast.makeText(getApplicationContext(),"Invalid Email!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Invalid Email!", Toast.LENGTH_LONG).show();
         }
     }
 }

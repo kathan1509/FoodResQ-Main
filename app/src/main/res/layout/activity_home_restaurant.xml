@@ -35,4 +35,10 @@
             app:navigationIcon="@drawable/menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Restaurant Activity"/>
+
 </androidx.drawerlayout.widget.DrawerLayout>

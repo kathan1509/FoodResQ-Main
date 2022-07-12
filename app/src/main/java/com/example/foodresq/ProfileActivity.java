@@ -1,14 +1,61 @@
 package com.example.foodresq;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private TextView userEmailId, userPassword, userContact, userAddress;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        if (user != null) {
+            userEmailId = (TextView) findViewById(R.id.tvUserEmail);
+            userPassword = (TextView) findViewById(R.id.tvUserPassword);
+            userContact = (TextView) findViewById(R.id.tvUserContact);
+            userAddress = (TextView) findViewById(R.id.tvUserAddress);
+
+            getUserProfile();
+
+        }
+    }
+
+    public void getUserProfile(){
+        String currentUser = user.getEmail();
+
+        db.collection("User")
+                .whereEqualTo("uEmailID",currentUser)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                userEmailId.setText((CharSequence) document.get("uEmailID"));
+                                userPassword.setText((CharSequence) document.get("uType"));
+                                userContact.setText((CharSequence) document.get("uContact"));
+                                userAddress.setText((CharSequence) document.get("uAddress"));
+                            }
+                        }
+                    }
+                });
     }
 }
+
