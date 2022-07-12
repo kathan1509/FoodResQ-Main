@@ -58,7 +58,8 @@
         <EditText
             android:id="@+id/edtEmailSu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:maxLines="1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -69,6 +70,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/password"
+        app:passwordToggleEnabled="true"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +79,8 @@
         <EditText
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -96,7 +99,8 @@
         <EditText
             android:id="@+id/edtAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +119,9 @@
         <EditText
             android:id="@+id/edtContact"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
