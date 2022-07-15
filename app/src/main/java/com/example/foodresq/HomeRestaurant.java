@@ -3,6 +3,7 @@ package com.example.foodresq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,7 +21,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-
+    ExtendedFloatingActionButton myFabBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+        myFabBtn = findViewById(R.id.add_fab);
 
         setSupportActionBar(toolbar);
 
@@ -37,6 +41,14 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        myFabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeRestaurant.this, AddFood.class);
+                startActivity(i);
+            }
+        });
 
     }
 

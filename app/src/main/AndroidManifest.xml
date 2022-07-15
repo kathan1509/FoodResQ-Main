@@ -17,6 +17,9 @@
             android:name=".HomeNGO"
             android:exported="false" />
         <activity
+            android:name=".AddFood"
+            android:exported="false" />
+        <activity
             android:name=".HistoryActivity"
             android:exported="false" />
         <activity
