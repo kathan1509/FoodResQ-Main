@@ -54,6 +54,8 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
 
         switch (item.getItemId()) {
             case R.id.nav_home:
+                Intent intent_home = new Intent(HomeRestaurant.this, HomeRestaurant.class);
+                startActivity(intent_home);
                 break;
             case R.id.nav_activity:
                 Intent intent = new Intent(HomeRestaurant.this, UserActivity.class);
@@ -75,6 +77,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 Intent i = new Intent(HomeRestaurant.this, LogIn.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
                 break;
         }

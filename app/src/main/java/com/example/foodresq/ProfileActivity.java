@@ -17,7 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView userEmailId, userPassword, userContact, userAddress;
+    private TextView userEmailId, userName, userContact, userAddress;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -27,21 +27,21 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         if (user != null) {
-            userEmailId = (TextView) findViewById(R.id.tvUserEmail);
-            userPassword = (TextView) findViewById(R.id.tvUserPassword);
-            userContact = (TextView) findViewById(R.id.tvUserContact);
-            userAddress = (TextView) findViewById(R.id.tvUserAddress);
+            userEmailId = (TextView) findViewById(R.id.emailtv);
+            userName = (TextView) findViewById(R.id.name);
+            userContact = (TextView) findViewById(R.id.contacttv);
+            userAddress = (TextView) findViewById(R.id.addresstv);
 
             getUserProfile();
 
         }
     }
 
-    public void getUserProfile(){
+    public void getUserProfile() {
         String currentUser = user.getEmail();
 
         db.collection("User")
-                .whereEqualTo("uEmailID",currentUser)
+                .whereEqualTo("uEmailID", currentUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 userEmailId.setText((CharSequence) document.get("uEmailID"));
-                                userPassword.setText((CharSequence) document.get("uType"));
+                                userName.setText((CharSequence) document.get("uName"));
                                 userContact.setText((CharSequence) document.get("uContact"));
                                 userAddress.setText((CharSequence) document.get("uAddress"));
                             }

@@ -30,7 +30,6 @@ public class LogIn extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userType;
-    String type = "Restaurant";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,16 +81,14 @@ public class LogIn extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(),
-                                                "Login successful!!",
+                                                "Login successful!!" ,
                                                 Toast.LENGTH_LONG)
                                         .show();
                                 // if login is successful
                                 // intent to home activity
                                 //checkUserType
-                                String currentUser = user.getEmail();
-
                                 db.collection("User")
-                                        .whereEqualTo("uEmailID", currentUser)
+                                        .whereEqualTo("uEmailID", userEmail)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -99,7 +96,7 @@ public class LogIn extends AppCompatActivity {
                                                 if (task.isSuccessful()) {
                                                     for (DocumentSnapshot document : task.getResult()) {
                                                         userType = document.get("uType").toString();
-                                                        Toast.makeText(LogIn.this, userType, Toast.LENGTH_LONG).show();
+                                                        //Toast.makeText(LogIn.this, userType, Toast.LENGTH_LONG).show();
 
                                                         if (userType.equals("Restaurant")) {
                                                             Intent intent
@@ -109,7 +106,7 @@ public class LogIn extends AppCompatActivity {
                                                         } else {
                                                             Intent intent
                                                                     = new Intent(LogIn.this,
-                                                                    ProfileActivity.class);
+                                                                    HomeNGO.class);
                                                             startActivity(intent);
                                                         }
                                                     }
