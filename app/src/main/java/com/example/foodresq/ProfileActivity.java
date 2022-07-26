@@ -48,10 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                userEmailId.setText((CharSequence) document.get("uEmailID"));
-                                userName.setText((CharSequence) document.get("uName"));
-                                userContact.setText((CharSequence) document.get("uContact"));
-                                userAddress.setText((CharSequence) document.get("uAddress"));
+                                userEmailId.append((CharSequence) document.get("uEmailID"));
+                                //userEmailId.setText((CharSequence) document.get("uEmailID"));
+                                userName.append((CharSequence) document.get("uName"));
+                                userContact.append((CharSequence) document.get("uContact").toString());
+                                userAddress.append((CharSequence) document.get("uAddress"));
                             }
                         }
                     }
