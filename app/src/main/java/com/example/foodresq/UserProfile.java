@@ -1,14 +1,23 @@
 package com.example.foodresq;
 
 public class UserProfile {
-    private String uEmailID, uType, uAddress;
+    private String uName,uEmailID, uType, uAddress;
     private String uContact;
 
-    UserProfile(String uType, String uEmailID, String uAddress, String uContact){
+    UserProfile(String uName,String uType, String uEmailID, String uAddress, String uContact){
+        this.uName = uName;
         this.uEmailID = uEmailID;
         this.uType = uType;
         this.uAddress = uAddress;
         this.uContact = uContact;
+    }
+
+    public String getuName(){
+        return this.uName;
+    }
+
+    public void setuName(String uName){
+        this.uName = uName;
     }
 
     public String getuEmailID(){

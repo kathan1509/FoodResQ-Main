@@ -36,7 +36,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
     String[] typeOfUser = {"Restaurant", "NGO"};
     String userIs;
-    private EditText emailText, passwordText, addressText, contactText;
+    private EditText userNameText, emailText, passwordText, addressText, contactText;
     private Button submitBtn;
     private FirebaseAuth mAuth;
     private FirebaseFirestore database;
@@ -55,6 +55,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
         mAuth = FirebaseAuth.getInstance();
 
+        userNameText = findViewById(R.id.edtName);
         emailText = findViewById(R.id.edtEmailSu);
         passwordText = findViewById(R.id.edtPassword);
         addressText = findViewById(R.id.edtAddress);
@@ -72,7 +73,8 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
 
     public void registerNewUser() {
-        String userEmail, pwd, address, contact;
+        String userName,userEmail, pwd, address, contact;
+        userName = userNameText.getText().toString();
         userEmail = emailText.getText().toString();
         pwd = passwordText.getText().toString();
         address = addressText.getText().toString();
@@ -83,7 +85,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         // email validation
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if (TextUtils.isEmpty(userEmail)) {
+        if (TextUtils.isEmpty(userEmail) && TextUtils.isEmpty(userName)) {
             Toast.makeText(getApplicationContext(), "Email can't be empty!", Toast.LENGTH_LONG).show();
             return;
         }
@@ -107,7 +109,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
                     if (task.isSuccessful()){
 
-                        addDataToFirestore(userIs, userEmail, address, contact);
+                        addDataToFirestore(userName, userIs, userEmail, address, contact);
                         //Toast.makeText(getApplicationContext(), "User Created.", Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(SignUp.this,LogIn.class );
@@ -127,11 +129,11 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
     }
 
-    public void addDataToFirestore(String uType, String uEmail, String uAddress, String uContact )
+    public void addDataToFirestore(String userName, String uType, String uEmail, String uAddress, String uContact )
     {
         CollectionReference userDatabase = database.collection("User");
 
-        UserProfile userProfile = new UserProfile(uType, uEmail,uAddress, uContact);
+        UserProfile userProfile = new UserProfile(userName, uType, uEmail,uAddress, uContact);
 
         userDatabase.add(userProfile).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
