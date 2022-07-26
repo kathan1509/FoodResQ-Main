@@ -11,22 +11,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class HomeRestaurant extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     ExtendedFloatingActionButton myFabBtn;
+    private RecyclerView activityRV;
+    private ArrayList<ActivityModel> activityModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_restaurant);
+
+        activityRV = findViewById(R.id.idRVActivity);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -39,6 +47,16 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Arraylist
+        activityModelArrayList = new ArrayList<>();
+        activityModelArrayList.add(new ActivityModel("The Grand Mehfil", "5", "Indian", "We have 5lb of curry that we want to be out before tomorrow evening"));
+
+        ActivityAdapter activityAdapter = new ActivityAdapter(this, activityModelArrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        activityRV.setLayoutManager(linearLayoutManager);
+        activityRV.setAdapter(activityAdapter);
 
         navigationView.setNavigationItemSelectedListener(this);
 

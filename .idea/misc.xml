@@ -14,12 +14,14 @@
         <entry key="app/src/main/res/layout/activity_add_food.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/activity_faq.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_history.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/activity_home_ngo.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/activity_home_restaurant.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/activity_log_in.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/activity_user.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/activitycard_layout.xml" value="0.23086789226165028" />
         <entry key="app/src/main/res/layout/fragment_activity.xml" value="0.231722958529286" />
         <entry key="app/src/main/res/layout/header.xml" value="0.2535271483539974" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.23086789226165028" />

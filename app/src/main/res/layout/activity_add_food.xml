@@ -52,6 +52,7 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/food_type"
+        app:placeholderText="e.g., Italian, mexican, chinese"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +63,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1" />
+
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtInpQuantity"
@@ -72,6 +75,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/quantity"
+        app:placeholderText="No of people can be served"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,8 +85,19 @@
             android:id="@+id/edtQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:inputType="number"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/food_qty_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toEndOf="@id/txtInpQuantity"
+        app:layout_constraintTop_toBottomOf="@id/txtInpFoodType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtInpBestB" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtInpBestB"
@@ -97,12 +112,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtInpQuantity">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtBestB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="datetime"
             android:maxLines="1" />
+
+      <!--  <DatePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
