@@ -21,14 +21,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 
@@ -39,7 +43,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     private EditText foodTypeTxt, foodQtyTxt, bestBeforeTxt, descriptionTxt;
     private Button addFoodBtn;
-    private String foodOrderStatus = "pending";
+    private String foodOrderStatus = "pending",qtyType;
     private FirebaseFirestore database;
     private FirebaseUser user;
     String currentUser;
@@ -51,6 +55,11 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         setContentView(R.layout.activity_add_food);
 
         date = findViewById(R.id.edtBestB);
+        foodTypeTxt = findViewById(R.id.edtFoodType);
+        foodQtyTxt = findViewById(R.id.edtQuantity);
+        bestBeforeTxt = findViewById(R.id.edtBestB);
+        descriptionTxt = findViewById(R.id.edtDescription);
+        addFoodBtn = findViewById(R.id.BtnPost);
 
         //Spinner
         Spinner food_qty_spin = findViewById(R.id.food_qty_spinner);
@@ -77,30 +86,13 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/"
-                                        + (monthOfYear + 1) + "/" + year);
+                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             }
         });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-
-        foodTypeTxt = findViewById(R.id.edtFoodType);
-        foodQtyTxt = findViewById(R.id.edtQuantity);
-        bestBeforeTxt = findViewById(R.id.edtBestB);
-        descriptionTxt = findViewById(R.id.edtDescription);
-        addFoodBtn = findViewById(R.id.BtnPost);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
@@ -119,11 +111,24 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         });
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedQtyType = parent.getItemAtPosition(position).toString();
+        //Toast.makeText(parent.getContext(), selectedUserType, Toast.LENGTH_LONG).show();
+        qtyType = selectedQtyType;
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     public void addFoodDetails()
     {
         String foodType, foodQty, bestBefore, description;
         foodType = foodTypeTxt.getText().toString();
-        foodQty = foodQtyTxt.getText().toString();
+        foodQty = foodQtyTxt.getText().toString() + " " + qtyType;
         bestBefore = bestBeforeTxt.getText().toString();
         description = descriptionTxt.getText().toString();
 
@@ -131,16 +136,33 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         user = FirebaseAuth.getInstance().getCurrentUser();
         currentUser = user.getEmail();
 
-        if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
-            Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
-            return;
-        }
-        else {
-            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser);
+        database.collection("User")
+                .whereEqualTo("uEmailID",currentUser)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful())
+                        {
+                            for (DocumentSnapshot document : task.getResult())
+                            {
+                                currentUser = document.getString("uName");
+                            }if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
+                            Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        else {
+                            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser);
 
-            Intent intent = new Intent(AddFood.this,HomeRestaurant.class );
-            startActivity(intent);
-        }
+                            Intent intent = new Intent(AddFood.this,HomeRestaurant.class );
+                            startActivity(intent);
+                        }
+                        }
+                    }
+                });
+
+
+
     }
 
     public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser){

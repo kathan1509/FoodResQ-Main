@@ -27,10 +27,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         if (user != null) {
-            userEmailId = (TextView) findViewById(R.id.emailtv);
-            userName = (TextView) findViewById(R.id.name);
-            userContact = (TextView) findViewById(R.id.contacttv);
-            userAddress = (TextView) findViewById(R.id.addresstv);
+            userEmailId = findViewById(R.id.emailtv);
+            userName = findViewById(R.id.name);
+            userContact = findViewById(R.id.contacttv);
+            userAddress = findViewById(R.id.addresstv);
 
             getUserProfile();
 
@@ -49,7 +49,6 @@ public class ProfileActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 userEmailId.append((CharSequence) document.get("uEmailID"));
-                                //userEmailId.setText((CharSequence) document.get("uEmailID"));
                                 userName.append((CharSequence) document.get("uName"));
                                 userContact.append((CharSequence) document.get("uContact").toString());
                                 userAddress.append((CharSequence) document.get("uAddress"));
