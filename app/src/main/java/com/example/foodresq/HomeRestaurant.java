@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,10 +17,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -30,6 +37,10 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
     ExtendedFloatingActionButton myFabBtn;
     private RecyclerView activityRV;
     private ArrayList<ActivityModel> activityModelArrayList;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private String resName, foodQty, foodType, foodDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +61,47 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        //Arraylist
-        activityModelArrayList = new ArrayList<>();
-        activityModelArrayList.add(new ActivityModel("The Grand Mehfil", "5", "Indian", "We have 5lb of curry that we want to be out before tomorrow evening"));
+        // fetching data from fireStore collection
+        String currentUser = user.getEmail();
+        database.collection("User")
+                .whereEqualTo("uEmailID", currentUser)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                resName = document.getString("uName");
+                            }
+                            String getUser = resName;
+                            database.collection("Food Details")
+                                    .whereEqualTo("user", getUser)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-        ActivityAdapter activityAdapter = new ActivityAdapter(this, activityModelArrayList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                                            if (task.isSuccessful()) {
+                                                activityModelArrayList = new ArrayList<ActivityModel>();
+                                                for (DocumentSnapshot document : task.getResult()) {
+                                                    foodQty = document.getString("foodQty");
+                                                    foodType = document.getString("foodType");
+                                                    foodDescription = document.getString("description");
+                                                    //if (document.getString("foodOrderStatus").equals("pending"))
+                                                    activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
+                                                }
 
-        activityRV.setLayoutManager(linearLayoutManager);
-        activityRV.setAdapter(activityAdapter);
+                                                ActivityAdapter activityAdapter = new ActivityAdapter(HomeRestaurant.this, activityModelArrayList);
+                                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeRestaurant.this, LinearLayoutManager.VERTICAL, false);
+
+                                                activityRV.setLayoutManager(linearLayoutManager);
+                                                activityRV.setAdapter(activityAdapter);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
 
         navigationView.setNavigationItemSelectedListener(this);
 

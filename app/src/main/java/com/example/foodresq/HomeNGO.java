@@ -13,9 +13,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -26,25 +33,15 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
     private RecyclerView activityRV;
     private ArrayList<ActivityModel> activityModelArrayList;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private String resName, foodQty, foodType, foodDescription;
+    ArrayList<String> temp = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_ngo);
-
-        /*Button logoutbtn = findViewById(R.id.btnLogOut);*/
-
-        // on click event handling using Intent
-        /*logoutbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Sign-Out
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(HomeNGO.this, LogIn.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-                finish();
-            }
-        });*/
 
         activityRV = findViewById(R.id.idRVActivity);
 
@@ -61,15 +58,35 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Arraylist
-        activityModelArrayList = new ArrayList<>();
-        activityModelArrayList.add(new ActivityModel("The Grand Mehfil", "5", "Indian", "We have 5lb of curry that we want to be out before tomorrow evening"));
+        // fetching data from fireStore collection
+        database.collection("Food Details")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-        ActivityAdapter activityAdapter = new ActivityAdapter(this, activityModelArrayList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                        if (task.isSuccessful()) {
+                            activityModelArrayList = new ArrayList<ActivityModel>();
+                            for (DocumentSnapshot document : task.getResult()) {
+                                resName = document.getString("user");
+                                foodQty = document.getString("foodQty");
+                                foodType = document.getString("foodType");
+                                foodDescription = document.getString("description");
 
-        activityRV.setLayoutManager(linearLayoutManager);
-        activityRV.setAdapter(activityAdapter);
+                                if (document.getString("foodOrderStatus").equals("pending")) {
+                                    activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
+                                }
+
+                            }
+
+                            ActivityAdapter activityAdapter = new ActivityAdapter(HomeNGO.this, activityModelArrayList);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeNGO.this, LinearLayoutManager.VERTICAL, false);
+
+                            activityRV.setLayoutManager(linearLayoutManager);
+                            activityRV.setAdapter(activityAdapter);
+                        }
+                    }
+                });
 
     }
 

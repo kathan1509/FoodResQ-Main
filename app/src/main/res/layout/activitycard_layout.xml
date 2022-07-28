@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="16dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp"
@@ -10,15 +11,18 @@
     app:cardMaxElevation="10dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
+<!--    android:layout_margin="2dp">-->
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingVertical="6dp">
 
         <TextView
             android:id="@+id/res_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/app_name"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/app_name"
@@ -41,6 +45,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/_10_lb"
+            android:textAlignment="textEnd"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+            android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
             android:layout_marginEnd="10dp"
             android:text="10 lb"
@@ -52,7 +63,7 @@
             android:id="@+id/food_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/res_name"
+            android:text="Food type"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="Food type" />
