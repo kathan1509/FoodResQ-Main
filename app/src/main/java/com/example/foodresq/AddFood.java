@@ -43,16 +43,22 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     private EditText foodTypeTxt, foodQtyTxt, bestBeforeTxt, descriptionTxt;
     private Button addFoodBtn;
-    private String foodOrderStatus = "pending",qtyType;
+    private String foodOrderStatus = "pending", qtyType;
     private FirebaseFirestore database;
     private FirebaseUser user;
-    String currentUser;
+    private String currentUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         date = findViewById(R.id.edtBestB);
         foodTypeTxt = findViewById(R.id.edtFoodType);
@@ -107,27 +113,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedQtyType = parent.getItemAtPosition(position).toString();
-        //Toast.makeText(parent.getContext(), selectedUserType, Toast.LENGTH_LONG).show();
         qtyType = selectedQtyType;
 
     }
@@ -137,8 +123,6 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    public void addFoodDetails()
-    {
     public void addFoodDetails() {
         String foodType, foodQty, bestBefore, description;
         foodType = foodTypeTxt.getText().toString();
@@ -152,38 +136,33 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
         if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
             Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
-            return;
         } else {
             createFoodPost(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser);
-        database.collection("User")
-                .whereEqualTo("uEmailID",currentUser)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful())
-                        {
-                            for (DocumentSnapshot document : task.getResult())
-                            {
-                                currentUser = document.getString("uName");
-                            }if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
-                            Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        else {
-                            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser);
+            database.collection("User")
+                    .whereEqualTo("uEmailID", currentUser)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot document : task.getResult()) {
+                                    currentUser = document.getString("uName");
+                                }
+                                if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description) && TextUtils.isEmpty(currentUser)) {
+                                    Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
+                                    return;
+                                } else {
+                                    createFoodPost(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser);
 
-            Intent intent = new Intent(AddFood.this, HomeRestaurant.class);
-            startActivity(intent);
+                                    Intent intent = new Intent(AddFood.this, HomeRestaurant.class);
+                                    startActivity(intent);
+                                }
+                                Intent intent = new Intent(AddFood.this, HomeRestaurant.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
         }
-                            Intent intent = new Intent(AddFood.this,HomeRestaurant.class );
-                            startActivity(intent);
-                        }
-                        }
-                    }
-                });
-
-
 
     }
 
