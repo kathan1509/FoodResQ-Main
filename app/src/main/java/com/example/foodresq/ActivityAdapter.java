@@ -51,7 +51,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //Location button code goes here
-
+                Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194?q=91 Dixon Street");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                context.startActivity(mapIntent);
             }
         });
 
