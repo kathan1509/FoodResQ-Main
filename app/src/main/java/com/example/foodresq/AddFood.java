@@ -38,30 +38,33 @@ import java.util.Calendar;
 
 public class AddFood extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] FoodQty = {"lb", "each"};
-    TextInputEditText date;
+    TextInputEditText bestBeforeTxt;
     DatePickerDialog datePickerDialog;
 
-    private EditText foodTypeTxt, foodQtyTxt, bestBeforeTxt, descriptionTxt;
+    private EditText foodTypeTxt, foodQtyTxt, descriptionTxt;
     private Button addFoodBtn;
     private String foodOrderStatus = "pending",qtyType;
     private FirebaseFirestore database;
     private FirebaseUser user;
     String currentUser;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food);
 
-        date = findViewById(R.id.edtBestB);
+        bestBeforeTxt = findViewById(R.id.edtBestB);
         foodTypeTxt = findViewById(R.id.edtFoodType);
         foodQtyTxt = findViewById(R.id.edtQuantity);
-        bestBeforeTxt = findViewById(R.id.edtBestB);
         descriptionTxt = findViewById(R.id.edtDescription);
         addFoodBtn = findViewById(R.id.BtnPost);
 
-        //Spinner
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);}
+
+        //Spinner for Qty Type
         Spinner food_qty_spin = findViewById(R.id.food_qty_spinner);
         food_qty_spin.setOnItemSelectedListener(this);
 
@@ -71,7 +74,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         food_qty_spin.setAdapter(arrayAdapter);
 
         //DatePicker
-        date.setOnClickListener(new View.OnClickListener() {
+        bestBeforeTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -86,7 +89,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                bestBeforeTxt.append(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
                             }
                         }, mYear, mMonth, mDay);
@@ -94,15 +97,11 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);}
-
         addFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //calling addFoodDetails method to add data into FireStore database.
                 addFoodDetails();
                 // notification message
                 postNotification();
@@ -113,10 +112,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String selectedQtyType = parent.getItemAtPosition(position).toString();
-        //Toast.makeText(parent.getContext(), selectedUserType, Toast.LENGTH_LONG).show();
-        qtyType = selectedQtyType;
-
+        qtyType = parent.getItemAtPosition(position).toString();
     }
 
     @Override
@@ -129,7 +125,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         String foodType, foodQty, bestBefore, description;
         foodType = foodTypeTxt.getText().toString();
         foodQty = foodQtyTxt.getText().toString() + " " + qtyType;
-        bestBefore = bestBeforeTxt.getText().toString();
+        bestBefore = bestBeforeTxt.toString();
         description = descriptionTxt.getText().toString();
 
         database = FirebaseFirestore.getInstance();
@@ -147,9 +143,9 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                             for (DocumentSnapshot document : task.getResult())
                             {
                                 currentUser = document.getString("uName");
-                            }if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
+                            }
+                            if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
                             Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
-                            return;
                         }
                         else {
                             createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser);
@@ -160,9 +156,6 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                         }
                     }
                 });
-
-
-
     }
 
     public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser){
@@ -182,7 +175,6 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                 Toast.makeText(AddFood.this, "Fail to create user \n" + e, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void postNotification()
@@ -196,5 +188,4 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(AddFood.this);
         managerCompat.notify(1, builder.build());
     }
-
 }

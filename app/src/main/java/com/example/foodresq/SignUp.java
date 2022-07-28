@@ -110,8 +110,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                     if (task.isSuccessful()){
 
                         addDataToFirestore(userName, userIs, userEmail, address, contact);
-                        //Toast.makeText(getApplicationContext(), "User Created.", Toast.LENGTH_LONG).show();
-
                         Intent intent = new Intent(SignUp.this,LogIn.class );
                         startActivity(intent);
                     }
@@ -153,7 +151,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         String selectedUserType = parent.getItemAtPosition(position).toString();
-        //Toast.makeText(parent.getContext(), selectedUserType, Toast.LENGTH_LONG).show();
         userIs = selectedUserType;
     }
 
