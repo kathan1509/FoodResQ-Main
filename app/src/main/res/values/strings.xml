@@ -3,7 +3,6 @@
     <string name="log_in">Log In</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="remember_me">Remember Me</string>
     <string name="new_to_foodresq">New to FoodResQ?</string>
     <string name="sign_up">Sign Up</string>
     <string name="address">Address</string>
@@ -27,4 +26,7 @@
     <string name="post">Post</string>
     <string name="description">Description</string>
     <string name="phone">Phone</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="location">Location</string>
 </resources>

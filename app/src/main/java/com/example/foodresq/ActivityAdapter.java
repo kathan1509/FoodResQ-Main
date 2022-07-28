@@ -1,13 +1,18 @@
 package com.example.foodresq;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -35,6 +40,21 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         holder.Food_Qty.setText(model.getFood_qty());
         holder.Food_Type.setText(model.getFood_type());
         holder.Food_Desc.setText(model.getFood_desc());
+        holder.AcceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Accept Button code goes here
+            }
+        });
+
+        holder.LocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Location button code goes here
+
+            }
+        });
+
     }
 
     @Override
@@ -44,6 +64,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView Res_Name, Food_Qty, Food_Type, Food_Desc;
+        private MaterialButton AcceptButton, LocationButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +72,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             Food_Qty = itemView.findViewById(R.id.food_qty);
             Food_Type = itemView.findViewById(R.id.food_type);
             Food_Desc = itemView.findViewById(R.id.desc_food);
+            AcceptButton = itemView.findViewById(R.id.btnAccept);
+            LocationButton = itemView.findViewById(R.id.btnLocation);
 
         }
     }

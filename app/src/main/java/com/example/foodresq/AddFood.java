@@ -33,7 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 
 public class AddFood extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    String[] FoodQty = {"lb", "each"};
+    String[] FoodQty = {"lb", "pieces"};
     TextInputEditText date;
     DatePickerDialog datePickerDialog;
 
@@ -51,12 +51,17 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         setContentView(R.layout.activity_add_food);
 
         date = findViewById(R.id.edtBestB);
+        foodTypeTxt = findViewById(R.id.edtFoodType);
+        foodQtyTxt = findViewById(R.id.edtQuantity);
+        bestBeforeTxt = findViewById(R.id.edtBestB);
+        descriptionTxt = findViewById(R.id.edtDescription);
+        addFoodBtn = findViewById(R.id.BtnPost);
 
         //Spinner
         Spinner food_qty_spin = findViewById(R.id.food_qty_spinner);
         food_qty_spin.setOnItemSelectedListener(this);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,FoodQty);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, FoodQty);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         food_qty_spin.setAdapter(arrayAdapter);
@@ -85,28 +90,6 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                 datePickerDialog.show();
             }
         });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-
-        foodTypeTxt = findViewById(R.id.edtFoodType);
-        foodQtyTxt = findViewById(R.id.edtQuantity);
-        bestBeforeTxt = findViewById(R.id.edtBestB);
-        descriptionTxt = findViewById(R.id.edtDescription);
-        addFoodBtn = findViewById(R.id.BtnPost);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);}
-
         addFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,8 +102,24 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         });
     }
 
-    public void addFoodDetails()
-    {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+    }
+
+    public void addFoodDetails() {
         String foodType, foodQty, bestBefore, description;
         foodType = foodTypeTxt.getText().toString();
         foodQty = foodQtyTxt.getText().toString();
@@ -134,16 +133,15 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
             Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
             return;
-        }
-        else {
-            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser);
+        } else {
+            createFoodPost(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser);
 
-            Intent intent = new Intent(AddFood.this,HomeRestaurant.class );
+            Intent intent = new Intent(AddFood.this, HomeRestaurant.class);
             startActivity(intent);
         }
     }
 
-    public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser){
+    public void createFoodPost(String foodType, String foodQty, String bestBefore, String description, String foodOrderStatus, String currentUser) {
 
         CollectionReference createFoodDatabase = database.collection("Food Details");
 
@@ -163,8 +161,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    public void postNotification()
-    {
+    public void postNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My Notification")
                 .setSmallIcon(R.drawable.foodresq_logo)
                 .setContentTitle("Food Post Created")
