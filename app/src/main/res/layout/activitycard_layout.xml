@@ -78,7 +78,6 @@
             android:layout_margin="10dp"
             android:elevation="4dp"
             app:cornerRadius="24dp"
-            android:visibility="gone"
             android:text="Accept"/>
 
         <com.google.android.material.button.MaterialButton

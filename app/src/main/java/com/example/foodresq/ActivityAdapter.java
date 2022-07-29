@@ -1,5 +1,6 @@
 package com.example.foodresq;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,10 +40,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         holder.Food_Qty.setText(model.getFood_qty());
         holder.Food_Type.setText(model.getFood_type());
         holder.Food_Desc.setText(model.getFood_desc());
+
         holder.AcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Accept Button code goes here
+                holder.AcceptButton.setVisibility(View.GONE);
+                holder.LocationButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -57,8 +60,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 context.startActivity(mapIntent);
             }
         });
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -77,7 +80,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             Food_Desc = itemView.findViewById(R.id.desc_food);
             AcceptButton = itemView.findViewById(R.id.btnAccept);
             LocationButton = itemView.findViewById(R.id.btnLocation);
-
         }
     }
 }

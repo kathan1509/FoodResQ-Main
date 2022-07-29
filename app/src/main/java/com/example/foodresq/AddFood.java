@@ -92,7 +92,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                date.append(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
                             }
                         }, mYear, mMonth, mDay);
@@ -134,10 +134,6 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
         user = FirebaseAuth.getInstance().getCurrentUser();
         currentUser = user.getEmail();
 
-        if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
-            Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
-        } else {
-            createFoodPost(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser);
             database.collection("User")
                     .whereEqualTo("uEmailID", currentUser)
                     .get()
@@ -164,7 +160,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                     });
         }
 
-    }
+
 
     public void createFoodPost(String foodType, String foodQty, String bestBefore, String description, String foodOrderStatus, String currentUser) {
 

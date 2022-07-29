@@ -1,5 +1,6 @@
 package com.example.foodresq;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -42,6 +44,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
     FirebaseFirestore database = FirebaseFirestore.getInstance();
     private String resName, foodQty, foodType, foodDescription;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
 
         // fetching data from fireStore collection
         String currentUser = user.getEmail();
@@ -158,4 +162,5 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         }
         return true;
     }
+
 }

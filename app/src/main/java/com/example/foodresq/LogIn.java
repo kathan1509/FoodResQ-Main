@@ -62,6 +62,7 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginUserAccount(email.getText().toString(), password.getText().toString());
+
             }
         });
 
@@ -73,6 +74,8 @@ public class LogIn extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
     }
 
@@ -117,6 +120,7 @@ public class LogIn extends AppCompatActivity {
 
 
                                                         if (userType.equals("Restaurant")) {
+
                                                             Intent intent
                                                                     = new Intent(LogIn.this,
                                                                     HomeRestaurant.class);

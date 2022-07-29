@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +38,7 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
     FirebaseFirestore database = FirebaseFirestore.getInstance();
     private String resName, foodQty, foodType, foodDescription;
     ArrayList<String> temp = new ArrayList<String>();
+    MaterialButton AcceptPostButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
+
         setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
@@ -58,6 +61,8 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
 
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        //AcceptPostButton.setVisibility(View.VISIBLE);
         // fetching data from fireStore collection
         database.collection("Food Details")
                 .get()
