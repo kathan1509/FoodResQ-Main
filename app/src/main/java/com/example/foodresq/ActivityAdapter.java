@@ -1,5 +1,7 @@
 package com.example.foodresq;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,10 +21,12 @@ import java.util.ArrayList;
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
     private Context context;
     private ArrayList<ActivityModel> activityModelArrayList;
+    String activityPage;
 
     //Constructor
-    public ActivityAdapter(Context context, ArrayList<ActivityModel> activityModelArrayList) {
+    public ActivityAdapter(Context context, ArrayList<ActivityModel> activityModelArrayList, String page) {
         this.context = context;
+        this.activityPage = page;
         this.activityModelArrayList = activityModelArrayList;
     }
 
@@ -78,6 +82,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             AcceptButton = itemView.findViewById(R.id.btnAccept);
             LocationButton = itemView.findViewById(R.id.btnLocation);
 
+            if (activityPage.equals("NGO"))
+                AcceptButton.setVisibility(View.VISIBLE);
         }
     }
 }

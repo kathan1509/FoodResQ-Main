@@ -32,6 +32,7 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
     Toolbar toolbar;
     private RecyclerView activityRV;
     private ArrayList<ActivityModel> activityModelArrayList;
+    String screen = "NGO";
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -79,7 +80,7 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
 
                             }
 
-                            ActivityAdapter activityAdapter = new ActivityAdapter(HomeNGO.this, activityModelArrayList);
+                            ActivityAdapter activityAdapter = new ActivityAdapter(HomeNGO.this, activityModelArrayList, screen);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeNGO.this, LinearLayoutManager.VERTICAL, false);
 
                             activityRV.setLayoutManager(linearLayoutManager);

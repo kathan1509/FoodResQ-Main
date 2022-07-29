@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -37,10 +38,13 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
     ExtendedFloatingActionButton myFabBtn;
     private RecyclerView activityRV;
     private ArrayList<ActivityModel> activityModelArrayList;
+    String screen = "Restaurant";
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore database = FirebaseFirestore.getInstance();
     private String resName, foodQty, foodType, foodDescription;
+
+    MaterialButton acceptBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,8 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         myFabBtn = findViewById(R.id.add_fab);
+
+        acceptBtn = findViewById(R.id.btnAccept);
 
         setSupportActionBar(toolbar);
 
@@ -91,7 +97,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
                                                     activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
                                                 }
 
-                                                ActivityAdapter activityAdapter = new ActivityAdapter(HomeRestaurant.this, activityModelArrayList);
+                                                ActivityAdapter activityAdapter = new ActivityAdapter(HomeRestaurant.this, activityModelArrayList, screen);
                                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeRestaurant.this, LinearLayoutManager.VERTICAL, false);
 
                                                 activityRV.setLayoutManager(linearLayoutManager);

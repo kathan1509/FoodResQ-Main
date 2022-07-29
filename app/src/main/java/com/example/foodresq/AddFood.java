@@ -37,7 +37,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Calendar;
 
 public class AddFood extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    String[] FoodQty = {"lb", "each"};
+    String[] FoodQty = {"lb", "pieces"};
     TextInputEditText bestBeforeTxt;
     DatePickerDialog datePickerDialog;
 
