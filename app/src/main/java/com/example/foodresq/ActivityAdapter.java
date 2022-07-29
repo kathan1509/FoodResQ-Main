@@ -1,7 +1,6 @@
 package com.example.foodresq;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -48,6 +47,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //Accept Button code goes here
+                holder.AcceptButton.setVisibility(View.GONE);
+                holder.LocationButton.setVisibility(View.VISIBLE);
             }
         });
 

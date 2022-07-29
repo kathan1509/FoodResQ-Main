@@ -17,9 +17,6 @@
             android:name=".ForgetPassword"
             android:exported="false" />
         <activity
-            android:name=".NotificationMessage"
-            android:exported="false" />
-        <activity
             android:name=".HomeNGO"
             android:exported="false" />
         <activity

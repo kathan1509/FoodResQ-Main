@@ -96,7 +96,6 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                 datePickerDialog.show();
             }
         });
-
         addFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
