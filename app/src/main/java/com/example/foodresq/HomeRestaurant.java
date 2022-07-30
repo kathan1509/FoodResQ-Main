@@ -82,7 +82,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
                             }
                             String getUser = resName;
                             database.collection("Food Details")
-                                    .whereEqualTo("user", getUser)
+                                    .whereEqualTo("userName", getUser)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
@@ -94,8 +94,9 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
                                                     foodQty = document.getString("foodQty");
                                                     foodType = document.getString("foodType");
                                                     foodDescription = document.getString("description");
-                                                    //if (document.getString("foodOrderStatus").equals("pending"))
-                                                    activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
+
+                                                    if (document.getString("foodOrderStatus").equals("pending"))
+                                                    {activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));}
                                                 }
 
                                                 ActivityAdapter activityAdapter = new ActivityAdapter(HomeRestaurant.this, activityModelArrayList, screen);

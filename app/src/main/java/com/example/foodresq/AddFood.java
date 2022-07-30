@@ -46,7 +46,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
     private String foodOrderStatus = "pending",qtyType;
     private FirebaseFirestore database;
     private FirebaseUser user;
-    String currentUser;
+    String currentUser,userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,12 +119,11 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    public void addFoodDetails()
-    {
+    public void addFoodDetails() {
         String foodType, foodQty, bestBefore, description;
         foodType = foodTypeTxt.getText().toString();
         foodQty = foodQtyTxt.getText().toString() + " " + qtyType;
-        bestBefore = bestBeforeTxt.toString();
+        bestBefore = bestBeforeTxt.getText().toString();
         description = descriptionTxt.getText().toString();
 
         database = FirebaseFirestore.getInstance();
@@ -141,13 +140,14 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                         {
                             for (DocumentSnapshot document : task.getResult())
                             {
-                                currentUser = document.getString("uName");
+                                //currentUser = document.getString("uEmailID");
+                                userName= document.getString("uName");
                             }
                             if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
                             Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser);
+                            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser,userName);
 
                             Intent intent = new Intent(AddFood.this,HomeRestaurant.class );
                             startActivity(intent);
@@ -157,11 +157,11 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                 });
     }
 
-    public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser){
+    public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser, String userName){
 
         CollectionReference createFoodDatabase = database.collection("Food Details");
 
-        FoodDetails foodDetails = new FoodDetails(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser);
+        FoodDetails foodDetails = new FoodDetails(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser, userName);
 
         createFoodDatabase.add(foodDetails).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -174,6 +174,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                 Toast.makeText(AddFood.this, "Fail to create user \n" + e, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     public void postNotification()

@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2898148148148148" />
         <entry key="../../../layout/custom_preview.xml" value="0.12222222222222222" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_add_food.xml" value="0.12037037037037036" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_forget_password.xml" value="0.1675213675213675" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_home_ngo.xml" value="0.17916666666666667" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_profile.xml" value="0.18229166666666666" />
@@ -34,7 +35,6 @@
         <entry key="app/src/main/res/layout/header.xml" value="0.2535271483539974" />
         <entry key="app/src/main/res/layout/list_group.xml" value="0.23086789226165028" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.23086789226165028" />
-        <entry key="app/src/main/res/layout/notification.xml" value="0.10773834972210346" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.23086789226165028" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.2535271483539974" />
         <entry key="app/src/main/res/menu/navigation.xml" value="0.23086789226165028" />
