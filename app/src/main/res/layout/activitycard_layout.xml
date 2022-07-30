@@ -92,6 +92,19 @@
             android:elevation="4dp"
             android:text="@string/location"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/desc_food"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            app:cornerRadius="24dp"
+            android:visibility="gone"
+            android:elevation="4dp"
+            android:text="@string/done"/>
+
+
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

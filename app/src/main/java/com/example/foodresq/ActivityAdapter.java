@@ -60,6 +60,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 context.startActivity(mapIntent);
             }
         });
+
+        holder.DoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Done Button code goes here
+            }
+        });
     }
 
 
@@ -70,7 +77,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView Res_Name, Food_Qty, Food_Type, Food_Desc;
-        private MaterialButton AcceptButton, LocationButton;
+        private MaterialButton AcceptButton, LocationButton, DoneButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +87,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             Food_Desc = itemView.findViewById(R.id.desc_food);
             AcceptButton = itemView.findViewById(R.id.btnAccept);
             LocationButton = itemView.findViewById(R.id.btnLocation);
+            DoneButton = itemView.findViewById(R.id.btnDone);
         }
     }
 }
