@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -45,10 +42,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         holder.Food_Qty.setText(model.getFood_qty());
         holder.Food_Type.setText(model.getFood_type());
         holder.Food_Desc.setText(model.getFood_desc());
+
         holder.AcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Accept Button code goes here
                 holder.AcceptButton.setVisibility(View.GONE);
                 holder.LocationButton.setVisibility(View.VISIBLE);
@@ -70,7 +67,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             }
         });
 
+        holder.DoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Done Button code goes here
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -79,7 +83,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView Res_Name, Food_Qty, Food_Type, Food_Desc;
-        private MaterialButton AcceptButton, LocationButton;
+        private MaterialButton AcceptButton, LocationButton, DoneButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +93,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             Food_Desc = itemView.findViewById(R.id.desc_food);
             AcceptButton = itemView.findViewById(R.id.btnAccept);
             LocationButton = itemView.findViewById(R.id.btnLocation);
+            DoneButton = itemView.findViewById(R.id.btnDone);
 
             if (activityPage.equals("NGO"))
                 AcceptButton.setVisibility(View.VISIBLE);
