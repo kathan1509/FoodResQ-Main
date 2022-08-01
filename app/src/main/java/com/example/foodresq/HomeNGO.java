@@ -34,7 +34,7 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private String resName, foodQty, foodType, foodDescription;
+    private String resName,orderStatus, foodQty, foodType, foodDescription,itemID;
     ArrayList<String> temp = new ArrayList<String>();
     MaterialButton AcceptPostButton;
 
@@ -67,15 +67,19 @@ public class HomeNGO extends AppCompatActivity implements NavigationView.OnNavig
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                         if (task.isSuccessful()) {
+                            //String currentUser = user
                             activityModelArrayList = new ArrayList<ActivityModel>();
                             for (DocumentSnapshot document : task.getResult()) {
-                                resName = document.getString("user");
+                                resName = document.getString("userName");
+                                orderStatus = document.getString("foodOrderStatus");
                                 foodQty = document.getString("foodQty");
                                 foodType = document.getString("foodType");
                                 foodDescription = document.getString("description");
+                                itemID = document.getString("user");
 
-                                if (document.getString("foodOrderStatus").equals("pending")) {
-                                    activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
+
+                                if (document.getString("foodOrderStatus").equalsIgnoreCase("pending")) {
+                                    activityModelArrayList.add(new ActivityModel(resName,orderStatus, foodQty, foodType, foodDescription,itemID));
                                 }
 
                             }

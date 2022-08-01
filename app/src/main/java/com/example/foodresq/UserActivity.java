@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class UserActivity extends AppCompatActivity {
     private RecyclerView activityRV;
     private ArrayList<ActivityModel> activityModelArrayList;
-    private String resName, foodQty, foodType, foodDescription;
+    private String resName,orderStatus, foodQty, foodType, foodDescription,itemID;
     private String screen = "User";
 
     FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -45,13 +45,21 @@ public class UserActivity extends AppCompatActivity {
                             for (DocumentSnapshot document : task.getResult()) {
                                 String currentUser = user.getEmail();
                                 resName = document.getString("userName");
+                                orderStatus = document.getString("foodOrderStatus");
                                 foodQty = document.getString("foodQty");
                                 foodType = document.getString("foodType");
                                 foodDescription = document.getString("description");
+                                itemID = document.getString("user");
+
+                                if (currentUser.equals(document.getString("userNGO"))) {
+                                    if (document.getString("foodOrderStatus").equalsIgnoreCase("onGoing")) {
+                                        activityModelArrayList.add(new ActivityModel(resName, orderStatus, foodQty, foodType, foodDescription,itemID));
+                                    }
+                                }
 
                                 if (currentUser.equals(document.getString("user"))) {
-                                    if (document.getString("foodOrderStatus").equals("onHold")) {
-                                        activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
+                                    if (document.getString("foodOrderStatus").equalsIgnoreCase("onGoing")) {
+                                        activityModelArrayList.add(new ActivityModel(resName, orderStatus, foodQty, foodType, foodDescription,itemID));
                                     }
                                 }
                             }

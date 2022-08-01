@@ -1,9 +1,9 @@
 package com.example.foodresq;
 
 public class FoodDetails {
-    private String foodType, foodQty, bestBefore, description, foodOrderStatus, user, userName;
+    private String foodType, foodQty, bestBefore, description, foodOrderStatus, user, userName, userNGO;
 
-    FoodDetails(String foodType, String foodQty, String bestBefore, String description, String foodOrderStatus, String user, String userName){
+    FoodDetails(String foodType, String foodQty, String bestBefore, String description, String foodOrderStatus, String user, String userName, String userNGO){
         this.foodType = foodType;
         this.foodQty = foodQty;
         this.bestBefore = bestBefore;
@@ -11,6 +11,7 @@ public class FoodDetails {
         this.foodOrderStatus = foodOrderStatus;
         this.user = user;
         this.userName = userName;
+        this.userNGO = userNGO;
     }
 
     public String getFoodType(){
@@ -66,5 +67,13 @@ public class FoodDetails {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getUserNGO() {
+        return this.userNGO;
+    }
+
+    public void setUserNGO(String user) {
+        this.userNGO = userNGO;
     }
 }

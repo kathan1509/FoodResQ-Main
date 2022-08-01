@@ -5,12 +5,17 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2898148148148148" />
         <entry key="../../../layout/custom_preview.xml" value="0.12222222222222222" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/drawable/menu.xml" value="0.1" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/drawable/question_mark.xml" value="0.1" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_add_food.xml" value="0.12037037037037036" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_forget_password.xml" value="0.1675213675213675" />
-        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_home_ngo.xml" value="0.17916666666666667" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_home_ngo.xml" value="0.1" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_home_restaurant.xml" value="0.1" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_profile.xml" value="0.18229166666666666" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_sign_up.xml" value="0.11513157894736842" />
-        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activitycard_layout.xml" value="0.25" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activity_user.xml" value="0.1" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/activitycard_layout.xml" value="0.1" />
+        <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/layout/header.xml" value="0.1675213675213675" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.13" />
         <entry key="..\:/Level4/CapstoneProject/FoodResQ-Main/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1375" />

@@ -46,7 +46,7 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
     private String foodOrderStatus = "pending",qtyType;
     private FirebaseFirestore database;
     private FirebaseUser user;
-    String currentUser,userName;
+    String currentUser,userName, userNGO=" ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,14 +140,13 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                         {
                             for (DocumentSnapshot document : task.getResult())
                             {
-                                //currentUser = document.getString("uEmailID");
                                 userName= document.getString("uName");
                             }
                             if (TextUtils.isEmpty(foodType) && TextUtils.isEmpty(foodQty) && TextUtils.isEmpty(bestBefore) && TextUtils.isEmpty(description)) {
                             Toast.makeText(getApplicationContext(), "All field must not empty!", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser,userName);
+                            createFoodPost(foodType,foodQty, bestBefore, description, foodOrderStatus, currentUser,userName, userNGO);
 
                             Intent intent = new Intent(AddFood.this,HomeRestaurant.class );
                             startActivity(intent);
@@ -157,11 +156,11 @@ public class AddFood extends AppCompatActivity implements AdapterView.OnItemSele
                 });
     }
 
-    public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser, String userName){
+    public void createFoodPost(String foodType,String foodQty,String bestBefore,String description, String foodOrderStatus, String currentUser, String userName, String userNGO){
 
         CollectionReference createFoodDatabase = database.collection("Food Details");
 
-        FoodDetails foodDetails = new FoodDetails(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser, userName);
+        FoodDetails foodDetails = new FoodDetails(foodType, foodQty, bestBefore, description, foodOrderStatus, currentUser, userName, userNGO);
 
         createFoodDatabase.add(foodDetails).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

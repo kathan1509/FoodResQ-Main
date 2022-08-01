@@ -25,18 +25,21 @@
             android:layout_marginTop="10dp"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvOrderStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_toEndOf="@id/res_name"
-            android:layout_margin="10dp"
             android:background="@android:color/holo_green_light"
-            />
+            android:text="Pending"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/food_qty"
@@ -47,7 +50,7 @@
             android:layout_marginEnd="10dp"
             android:text="@string/_10_lb"
             android:textAlignment="textEnd"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -57,7 +60,8 @@
             android:text="Food type"
             android:layout_below="@id/res_name"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/desc_food"
@@ -67,7 +71,19 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:maxLines="2"
-            android:text="@string/description" />
+            android:text="@string/description"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/itemID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/desc_food"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:maxLines="2"
+            android:text="ID"
+            android:visibility="gone"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAccept"
@@ -82,28 +98,46 @@
             android:visibility="gone"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/desc_food"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:elevation="4dp"
+            app:cornerRadius="24dp"
+            android:text="Delete"
+            android:visibility="gone"/>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/desc_food"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            app:cornerRadius="24dp"
-            android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:elevation="4dp"
-            android:text="@string/location"/>
+            android:text="@string/location"
+            android:visibility="gone"
+            app:cornerRadius="24dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@+id/btnLocation"
             android:layout_below="@id/desc_food"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            app:cornerRadius="24dp"
-            android:visibility="gone"
             android:elevation="4dp"
-            android:text="@string/done"/>
+            android:text="@string/done"
+            android:visibility="gone"
+            app:cornerRadius="24dp" />
 
 
     </RelativeLayout>

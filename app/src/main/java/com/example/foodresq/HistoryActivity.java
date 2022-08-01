@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class HistoryActivity extends AppCompatActivity {
     private RecyclerView activityRV;
     private ArrayList<ActivityModel> activityModelArrayList;
-    private String resName, foodQty, foodType, foodDescription;
+    private String resName, orderStatus, foodQty, foodType, foodDescription,itemID;
     private String screen = "History";
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -47,15 +47,35 @@ public class HistoryActivity extends AppCompatActivity {
                                 String currentUser = user.getEmail();
 
                                     resName = document.getString("userName");
+                                    orderStatus = document.getString("foodOrderStatus");
                                     foodQty = document.getString("foodQty");
                                     foodType = document.getString("foodType");
                                     foodDescription = document.getString("description");
 
-                                if (currentUser.equals(document.getString("user"))) {
-                                    if (document.getString("foodOrderStatus").equals("done")) {
-                                        activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));
+                                    if(document.getString("userNGO").isEmpty()){
+                                        if (currentUser.equals(document.getString("user"))) {
+                                            if (document.getString("foodOrderStatus").equals("done")) {
+                                                activityModelArrayList.add(new ActivityModel(resName, orderStatus,foodQty, foodType, foodDescription,itemID));
+                                            }
+                                        }
                                     }
-                                }
+                                    else
+                                    {
+                                        if (currentUser.equals(document.getString("userNGO"))) {
+                                            if (document.getString("foodOrderStatus").equals("done")) {
+                                                activityModelArrayList.add(new ActivityModel(resName, orderStatus,foodQty, foodType, foodDescription,itemID));
+                                            }
+                                        }
+
+                                        if (currentUser.equals(document.getString("user"))) {
+                                            if (document.getString("foodOrderStatus").equals("done")) {
+                                                activityModelArrayList.add(new ActivityModel(resName, orderStatus,foodQty, foodType, foodDescription,itemID));
+                                            }
+                                        }
+
+                                    }
+
+
                             }
                             ActivityAdapter activityAdapter = new ActivityAdapter(HistoryActivity.this, activityModelArrayList, screen);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HistoryActivity.this, LinearLayoutManager.VERTICAL, false);

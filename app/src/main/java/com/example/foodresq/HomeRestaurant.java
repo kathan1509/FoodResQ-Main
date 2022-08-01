@@ -43,7 +43,7 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private String resName, foodQty, foodType, foodDescription;
+    private String resName, orderStatus, foodQty, foodType, foodDescription,itemID;
 
     MaterialButton acceptBtn;
 
@@ -91,12 +91,14 @@ public class HomeRestaurant extends AppCompatActivity implements NavigationView.
                                             if (task.isSuccessful()) {
                                                 activityModelArrayList = new ArrayList<ActivityModel>();
                                                 for (DocumentSnapshot document : task.getResult()) {
+                                                    orderStatus = document.getString("foodOrderStatus");
                                                     foodQty = document.getString("foodQty");
                                                     foodType = document.getString("foodType");
                                                     foodDescription = document.getString("description");
+                                                    itemID = document.getString("user");
 
                                                     if (document.getString("foodOrderStatus").equals("pending"))
-                                                    {activityModelArrayList.add(new ActivityModel(resName, foodQty, foodType, foodDescription));}
+                                                    {activityModelArrayList.add(new ActivityModel(resName,orderStatus, foodQty, foodType, foodDescription,itemID));}
                                                 }
 
                                                 ActivityAdapter activityAdapter = new ActivityAdapter(HomeRestaurant.this, activityModelArrayList, screen);
